@@ -1,0 +1,20 @@
+{
+  "name": "ddconsult-viewer",
+  "version": "0.0.1",
+  "description": "Viewer app for ddconsult",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Naruki Yoshikawa",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^16.0.5"
+  },
+  "dependencies": {
+    "@rdkit/rdkit": "^2021.9.3",
+    "bootstrap": "^5.1.3",
+    "jquery": "^3.6.0",
+    "vue": "^2.6.14"
+  }
+}

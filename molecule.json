@@ -1,0 +1,5 @@
+{"molecules": [
+    {"smiles": "c1ccccc1", "tags": ["Ro5"], "liked": false, "disliked": true},
+    {"smiles": "c1ccccc1CC", "tags": ["MCF", "PAINS"], "liked": true, "disliked": false},
+    {"smiles": "CCCO", "tags": [], "liked": false, "disliked": false}]
+}

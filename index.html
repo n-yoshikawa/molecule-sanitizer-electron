@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <!-- 'unsafe-eval' must be specified to use RDKit wasm -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-eval'; img-src 'self' data: ;">
+    <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+    <title>Sanitize It Yourself (serverless edition)</title>
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+  </head>
+  <body>
+  <header>
+    <div class="navbar navbar-dark bg-dark shadow-sm">
+      <div class="container">
+        <span class="navbar-brand d-flex align-items-center mr-auto">
+          <strong>Sanitize It Yourself</strong>
+        </span>
+      </div>
+    </div>
+  </header>
+<main id="app">
+<section class="pt-3 container min-vh-100">
+  <h1 class="h2 pt-3 pb-2 mb-3 border-bottom">Molecule Viewer</h1>
+  <div v-if="loadFile">
+    <p>Please open <code>molecule.json</code></p>
+    <input type="file" id="file-input" />
+  </div>
+  <div v-else>
+  <h2 class="h4">Filter</h2>
+  <div class="form-check form-check-inline">
+      <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="Ro5" v-model="filter" v-on:change="onChange(filter)">
+    <label class="form-check-label" for="inlineCheckbox1">Rule of Five (Ro5)</label>
+  </div>
+  <div class="form-check form-check-inline">
+      <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="PAINS" v-model="filter" v-on:change="onChange(filter)">
+    <label class="form-check-label" for="inlineCheckbox2">PAINS</label>
+  </div>
+  <div class="form-check form-check-inline">
+      <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="MCF" v-model="filter" v-on:change="onChange(filter)">
+    <label class="form-check-label" for="inlineCheckbox3">MCF</label>
+  </div>
+  <div class="form-check form-check-inline">
+      <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="dislike" v-model="filter" v-on:change="onChange(filter)">
+    <label class="form-check-label" for="inlineCheckbox4">&#x1f44e;</label>
+  </div>
+  <div class="form-check form-check-inline">
+      <input class="form-check-input" type="checkbox" id="inlineCheckbox5" value="like" v-model="filter" v-on:change="onChange(filter)">
+    <label class="form-check-label" for="inlineCheckbox5">&#x1f44d;</label>
+  </div>
+  <hr class="mt-4 mb-5">
+  <div id="molecules" class="row row-cols-2 row-cols-md-3 row-cols-lg-6 g-2">
+    <div class="col" v-for="molecule in molecules">
+      <div class="card">
+        <div class="dropdown text-end">
+          <button class="btn btn-sm dropdown-toggle text-secondary"></button>
+        </div>
+        <span>
+          <div class="ratio ratio-4x3">
+            <canvas class="mol_images" width="400" height="300">{{ molecule.smiles }}</canvas>
+          </div>
+        </span>
+        <div class="card-body">
+          <span v-for="tag in molecule.tags">
+            <span class="badge rounded-pill bg-primary" v-if="tag=='Ro5'"><small>{{ tag }}</small></span>
+            <span class="badge rounded-pill bg-danger" v-if="tag=='PAINS'"><small>{{ tag }}</small></span>
+            <span class="badge rounded-pill bg-warning text-dark" v-if="tag=='MCF'"><small>{{ tag }}</small></span>
+          </span>
+          <span v-if="molecule.tags.length==0">
+            <span class="badge rounded-pill bg-light"><small></small></span>
+          </span>
+        </div>
+        <div class="btn-group d-flex w-100">
+          <button type="button" class="btn w-100" v-bind:class="{ 'btn-danger': molecule.disliked }">&#x1f44e;</button>
+          <button type="button" class="btn w-100" v-bind:class="{ 'btn-info': molecule.liked }">&#x1f44d;</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+</main>
+  <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="./node_modules/jquery/dist/jquery.min.js"></script>
+  <script src="./node_modules/@rdkit/rdkit/Code/MinimalLib/dist/RDKit_minimal.js"></script>
+  <script src="./node_modules/vue/dist/vue.min.js"></script>
+  <script src="./js/renderer.js"></script>
+</script>
+  </body>
+</html>
